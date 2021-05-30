@@ -14,13 +14,23 @@ struct AABB
     float hh; // half height
 
     sf::RectangleShape shape;
+    sf::Color color; //outline
 
-    explicit AABB(float x = 0, float y = 0, float width = 0, float height = 0) : x(x), y(y), hw(width / 2), hh(height / 2)
+    explicit AABB(float x = 0, float y = 0, float width = 0, float height = 0, const sf::Color &color = sf::Color::White) : x(x), y(y), hw(width / 2), hh(height / 2), color(color)
     {
         init();
     }
 
     void init();
+
+    void setPosition(const sf::Vector2f &position)
+    {
+        x = position.x + hw;
+        y = position.y + hh;
+
+        shape.setPosition(x - hw, y - hh);
+        shape.setSize(sf::Vector2f(hw * 2, hh * 2));
+    }
 
     ///
     // checks whether this box contains the given point

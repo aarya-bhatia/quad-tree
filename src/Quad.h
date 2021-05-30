@@ -2,6 +2,7 @@
 
 #include "AABB.h"
 #include "QtNode.h"
+#include "Range.h"
 
 #include <iostream>
 #include <array>
@@ -34,17 +35,20 @@ public:
     }
 
     bool insert(const sf::Vector2f &point);
-
-    void query(const AABB &range, bool mark = true);
-
+    void query(const Range &range);
     void render(sf::RenderWindow &window);
 
     static int count;
 
+    static Quad *createQtree(const sf::RenderWindow &window)
+    {
+        sf::Vector2u size = window.getSize();
+        return new Quad(sf::Vector2f(size.x / 2, size.y / 2), sf::Vector2f(size));
+    }
+
 private:
     AABB boundary;
     QtNode node;
-
     Quad *children[4];
 
     void clear();

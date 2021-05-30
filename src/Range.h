@@ -1,37 +1,38 @@
 #pragma once
 
 #include "AABB.h"
-#include "Quad.h"
 
-struct Range
+class Range
 {
-    AABB range;
-    sf::RectangleShape shape;
-
+private:
     bool marked = false;
 
-    Range(float x, float y, float w, float h) : range(x, y, w, h)
+public:
+    AABB boundary;
+    int num_points = 0;
+
+    Range(float x, float y, float w, float h) : boundary(x, y, w, h, sf::Color::Green)
     {
-        shape.setSize(sf::Vector2f(w, h));
-        shape.setPosition(sf::Vector2f(x - w / 2, y - h / 2));
-        shape.setFillColor(sf::Color::Transparent);
-        shape.setOutlineColor(sf::Color::Green);
-        shape.setOutlineThickness(4);
     }
 
-    void update()
+    bool isMarked() const
     {
-        marked = !marked;
+        return marked;
     }
 
-    void query(Quad &quad)
+    void setMarked(bool b)
     {
-        update();
-        quad.query(range, marked);
+        num_points = 0;
+        marked = b;
     }
 
     void render(sf::RenderWindow &window)
     {
-        window.draw(shape);
+        boundary.render(window);
+    }
+
+    void setPosition(const sf::Vector2f &position)
+    {
+        boundary.setPosition(position);
     }
 };

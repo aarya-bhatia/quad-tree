@@ -58,20 +58,20 @@ bool Quad::insert(const sf::Vector2f &point)
     return false;
 }
 
-void Quad::query(const AABB &range, bool mark)
+void Quad::query(const Range &range)
 {
-    if (!boundary.intersects(range))
+    if (!boundary.intersects(range.boundary))
     {
         return;
     }
 
-    node.query(range, mark);
+    node.query(range.boundary, range.isMarked());
 
     for (Quad *child : children)
     {
         if (child != nullptr)
         {
-            child->query(range, mark);
+            child->query(range);
         }
     }
 }
