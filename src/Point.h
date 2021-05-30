@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-static const int radius = 2;
+static const int radius = 4;
 static const sf::Color marked = sf::Color::Red;
 static const sf::Color normal = sf::Color::White;
 
