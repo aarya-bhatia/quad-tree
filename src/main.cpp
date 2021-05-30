@@ -17,8 +17,8 @@ int main()
 
     srand(time(0));
 
-    int t = 0;
-    bool adding = false;
+    int t = 2;
+    bool adding = true;
 
     Range r(200, 300, 400, 400);
 

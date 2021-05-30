@@ -15,7 +15,7 @@ struct AABB
 
     sf::RectangleShape shape;
 
-    explicit AABB(float x = 0, float y = 0, float width = 0, float height = 0) : x(x), y(y), hw(width / 2), hh(height / 2), shape()
+    explicit AABB(float x = 0, float y = 0, float width = 0, float height = 0) : x(x), y(y), hw(width / 2), hh(height / 2)
     {
         init();
     }

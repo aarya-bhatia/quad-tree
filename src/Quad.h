@@ -18,7 +18,13 @@ enum quadrants
 class Quad
 {
 public:
-    Quad(const AABB &boundary = AABB()) : boundary(boundary), node() {}
+    Quad(const AABB &boundary = AABB()) : boundary(boundary), node()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            children[i] = nullptr;
+        }
+    }
 
     Quad(const sf::Vector2f &center, const sf::Vector2f &size) : Quad(AABB(center.x, center.y, size.x, size.y)) {}
 
@@ -39,7 +45,7 @@ private:
     AABB boundary;
     QtNode node;
 
-    std::array<Quad *, 4> children;
+    Quad *children[4];
 
     void clear();
 };

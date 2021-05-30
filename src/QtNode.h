@@ -13,11 +13,15 @@ class QtNode
 private:
     int size;
 
-    std::array<Point *, qt_node_capacity> points;
+    Point *points[qt_node_capacity];
 
 public:
     QtNode() : size(0)
     {
+        for (int i = 0; i < qt_node_capacity; i++)
+        {
+            points[i] = nullptr;
+        }
     }
 
     ~QtNode()

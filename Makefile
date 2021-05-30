@@ -12,7 +12,7 @@ all: $(TARGET_EXE)
 $(TARGET_EXE): $(OBJ)
 	$(CXX) $(LDLIBS) $^ -o $@
 
-obj/%.o: src/%.cpp src/algorithm/Quad.h src/algorithm/AABB.h
+obj/%.o: src/%.cpp $(wildcard src/*.h)
 	mkdir -p $(dir $@);
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 

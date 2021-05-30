@@ -1,4 +1,4 @@
-obj/main.o: src/main.cpp src/algorithm/Quad.h src/algorithm/AABB.h \
+obj/main.o: src/main.cpp src/Quad.h src/AABB.h \
   /usr/local/include/SFML/Graphics/RenderWindow.hpp \
   /usr/local/include/SFML/Graphics/Export.hpp \
   /usr/local/include/SFML/Config.hpp \
@@ -35,19 +35,47 @@ obj/main.o: src/main.cpp src/algorithm/Quad.h src/algorithm/AABB.h \
   /usr/local/include/SFML/Graphics/Shape.hpp \
   /usr/local/include/SFML/Graphics/Drawable.hpp \
   /usr/local/include/SFML/Graphics/Transformable.hpp \
-  /usr/local/include/SFML/Graphics/VertexArray.hpp \
-  /usr/local/include/SFML/Graphics/CircleShape.hpp \
+  /usr/local/include/SFML/Graphics/VertexArray.hpp src/QtNode.h \
+  src/Point.h /usr/local/include/SFML/Graphics.hpp \
+  /usr/local/include/SFML/Window.hpp /usr/local/include/SFML/System.hpp \
+  /usr/local/include/SFML/System/Err.hpp \
+  /usr/local/include/SFML/System/FileInputStream.hpp \
+  /usr/local/include/SFML/System/InputStream.hpp \
+  /usr/local/include/SFML/System/Lock.hpp \
+  /usr/local/include/SFML/System/MemoryInputStream.hpp \
+  /usr/local/include/SFML/System/Mutex.hpp \
+  /usr/local/include/SFML/System/Sleep.hpp \
+  /usr/local/include/SFML/System/Thread.hpp \
+  /usr/local/include/SFML/System/Thread.inl \
+  /usr/local/include/SFML/System/ThreadLocal.hpp \
+  /usr/local/include/SFML/System/ThreadLocalPtr.hpp \
+  /usr/local/include/SFML/System/ThreadLocalPtr.inl \
+  /usr/local/include/SFML/System/Vector3.hpp \
+  /usr/local/include/SFML/System/Vector3.inl \
+  /usr/local/include/SFML/Window/Clipboard.hpp \
+  /usr/local/include/SFML/Window/Context.hpp \
   /usr/local/include/SFML/Window/Event.hpp \
   /usr/local/include/SFML/Window/Joystick.hpp \
   /usr/local/include/SFML/Window/Keyboard.hpp \
   /usr/local/include/SFML/Window/Mouse.hpp \
   /usr/local/include/SFML/Window/Sensor.hpp \
-  /usr/local/include/SFML/System/Vector3.hpp \
-  /usr/local/include/SFML/System/Vector3.inl
+  /usr/local/include/SFML/Window/Touch.hpp \
+  /usr/local/include/SFML/Graphics/CircleShape.hpp \
+  /usr/local/include/SFML/Graphics/ConvexShape.hpp \
+  /usr/local/include/SFML/Graphics/Font.hpp \
+  /usr/local/include/SFML/Graphics/Glyph.hpp \
+  /usr/local/include/SFML/Graphics/Texture.hpp \
+  /usr/local/include/SFML/Graphics/RenderTexture.hpp \
+  /usr/local/include/SFML/Graphics/Shader.hpp \
+  /usr/local/include/SFML/Graphics/Glsl.hpp \
+  /usr/local/include/SFML/Graphics/Glsl.inl \
+  /usr/local/include/SFML/Graphics/Sprite.hpp \
+  /usr/local/include/SFML/Graphics/Text.hpp \
+  /usr/local/include/SFML/Graphics/VertexBuffer.hpp src/Range.h
 
-src/algorithm/Quad.h:
+src/Quad.h:
 
-src/algorithm/AABB.h:
+src/AABB.h:
 
 /usr/local/include/SFML/Graphics/RenderWindow.hpp:
 
@@ -123,7 +151,47 @@ src/algorithm/AABB.h:
 
 /usr/local/include/SFML/Graphics/VertexArray.hpp:
 
-/usr/local/include/SFML/Graphics/CircleShape.hpp:
+src/QtNode.h:
+
+src/Point.h:
+
+/usr/local/include/SFML/Graphics.hpp:
+
+/usr/local/include/SFML/Window.hpp:
+
+/usr/local/include/SFML/System.hpp:
+
+/usr/local/include/SFML/System/Err.hpp:
+
+/usr/local/include/SFML/System/FileInputStream.hpp:
+
+/usr/local/include/SFML/System/InputStream.hpp:
+
+/usr/local/include/SFML/System/Lock.hpp:
+
+/usr/local/include/SFML/System/MemoryInputStream.hpp:
+
+/usr/local/include/SFML/System/Mutex.hpp:
+
+/usr/local/include/SFML/System/Sleep.hpp:
+
+/usr/local/include/SFML/System/Thread.hpp:
+
+/usr/local/include/SFML/System/Thread.inl:
+
+/usr/local/include/SFML/System/ThreadLocal.hpp:
+
+/usr/local/include/SFML/System/ThreadLocalPtr.hpp:
+
+/usr/local/include/SFML/System/ThreadLocalPtr.inl:
+
+/usr/local/include/SFML/System/Vector3.hpp:
+
+/usr/local/include/SFML/System/Vector3.inl:
+
+/usr/local/include/SFML/Window/Clipboard.hpp:
+
+/usr/local/include/SFML/Window/Context.hpp:
 
 /usr/local/include/SFML/Window/Event.hpp:
 
@@ -135,6 +203,30 @@ src/algorithm/AABB.h:
 
 /usr/local/include/SFML/Window/Sensor.hpp:
 
-/usr/local/include/SFML/System/Vector3.hpp:
+/usr/local/include/SFML/Window/Touch.hpp:
 
-/usr/local/include/SFML/System/Vector3.inl:
+/usr/local/include/SFML/Graphics/CircleShape.hpp:
+
+/usr/local/include/SFML/Graphics/ConvexShape.hpp:
+
+/usr/local/include/SFML/Graphics/Font.hpp:
+
+/usr/local/include/SFML/Graphics/Glyph.hpp:
+
+/usr/local/include/SFML/Graphics/Texture.hpp:
+
+/usr/local/include/SFML/Graphics/RenderTexture.hpp:
+
+/usr/local/include/SFML/Graphics/Shader.hpp:
+
+/usr/local/include/SFML/Graphics/Glsl.hpp:
+
+/usr/local/include/SFML/Graphics/Glsl.inl:
+
+/usr/local/include/SFML/Graphics/Sprite.hpp:
+
+/usr/local/include/SFML/Graphics/Text.hpp:
+
+/usr/local/include/SFML/Graphics/VertexBuffer.hpp:
+
+src/Range.h:
