@@ -1,22 +1,26 @@
 #include "Quad.h"
 #include "AABB.h"
+#include "Range.h"
 
 #include <SFML/Window/Event.hpp>
 
-std::unique_ptr<Quad> createQtree(sf::RenderWindow &window)
+Quad *createQtree(sf::RenderWindow &window)
 {
     sf::Vector2u size = window.getSize();
-    return std::make_unique<Quad>(sf::Vector2f(size.x / 2, size.y / 2), sf::Vector2f(size));
+    return new Quad(sf::Vector2f(size.x / 2, size.y / 2), sf::Vector2f(size));
 }
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1600, 1200), "Quadtree", sf::Style::Default);
-    std::unique_ptr<Quad> qtree = createQtree(window);
+    sf::RenderWindow window(sf::VideoMode(1600, 1200), "Quadtree");
+    Quad *qtree = createQtree(window);
 
     srand(time(0));
+
     int t = 0;
-    bool adding = true;
+    bool adding = false;
+
+    Range r(200, 300, 400, 400);
 
     while (window.isOpen())
     {
@@ -29,7 +33,7 @@ int main()
             }
             else if (event.type == sf::Event::Resized)
             {
-                qtree.release();
+                delete qtree;
                 qtree = createQtree(window);
             }
             else if (event.type == sf::Event::KeyReleased)
@@ -38,10 +42,22 @@ int main()
                 {
                     window.close();
                 }
+                else if (event.key.code == sf::Keyboard::Q)
+                {
+                    r.query(*qtree);
+                }
+                else if (event.key.code == sf::Keyboard::I)
+                {
+                    std::cout << "points count = " << Quad::count << std::endl;
+                }
             }
-            else if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            else if (event.type == sf::Event::MouseButtonPressed)
             {
-                adding = !adding;
+                if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                {
+                    adding = !adding;
+                    std::cout << "Adding: " << adding << std::endl;
+                }
             }
         }
 
@@ -49,14 +65,20 @@ int main()
 
         t = (t + 1) % INT16_MAX;
 
-        if (adding && t % 60 == 0)
+        if (adding && t % 120 == 0)
         {
-            qtree->insert(sf::Vector2f(sf::Mouse::getPosition(window)));
+            sf::Vector2i p = sf::Mouse::getPosition(window);
+            qtree->insert(sf::Vector2f(p));
         }
 
         qtree->render(window);
 
+        r.render(window);
+
         window.display();
     }
+
+    delete qtree;
+
     return 0;
 }

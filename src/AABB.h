@@ -15,7 +15,7 @@ struct AABB
 
     sf::RectangleShape shape;
 
-    explicit AABB(float x, float y, float width, float height) : x(x), y(y), hw(width / 2), hh(height / 2), shape()
+    explicit AABB(float x = 0, float y = 0, float width = 0, float height = 0) : x(x), y(y), hw(width / 2), hh(height / 2), shape()
     {
         init();
     }
@@ -71,6 +71,30 @@ struct AABB
     AABB southeast() const
     {
         return AABB(x + hw / 2, y + hh / 2, hw, hh);
+    }
+
+    // checks if the point lies in the NE quadrant of box
+    bool isNE(const sf::Vector2f &point) const
+    {
+        return point.x >= x && point.y <= y;
+    }
+
+    // checks if the point lies in the NW quadrant of box
+    bool isNW(const sf::Vector2f &point) const
+    {
+        return point.x <= x && point.y <= y;
+    }
+
+    // checks if the point lies in the SE quadrant of box
+    bool isSE(const sf::Vector2f &point) const
+    {
+        return point.x >= x && point.y >= y;
+    }
+
+    // checks if the point lies in the SW quadrant of box
+    bool isSW(const sf::Vector2f &point) const
+    {
+        return point.x <= x && point.y >= y;
     }
 
     void render(sf::RenderWindow &window)
