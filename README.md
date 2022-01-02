@@ -9,9 +9,6 @@ ones that contain the points in inside it. The green rectangle shows the selecte
 By pressing the Q key, you can query through the quadtree and it will mark the points currently
 in the selected region red.
 
-This is one of the benifits of using a quad tree. The searchthat would otherwise be expensive can
-be sped up significantly using this data structure.
-
 The framework used for graphics is SFML. You must install SFML in your system's library path to run the
 executable. To compiled the project, run 'make' in the root directory. It will generate the exectuable
 in the same directory called 'main'. Type './main' to launch the app...
