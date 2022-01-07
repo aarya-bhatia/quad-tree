@@ -1,12 +1,12 @@
+#include <SFML/Window/Event.hpp>
 #include "Quad.h"
 #include "AABB.h"
 #include "Range.h"
 
-#include <SFML/Window/Event.hpp>
+static const float width = 1600;
+static const float height = 1200; 
+static const char *title = "QuadTree";
 
-#define width 1600
-#define height 1200
-#define title "QuadTree"
 
 int main()
 {
@@ -17,6 +17,7 @@ int main()
 
     int t = 2;
     bool adding = true;
+    int dsize = 2;
 
     Range range(200, 300, 400, 400);
 
@@ -43,7 +44,8 @@ int main()
             // Key Events->
             // Esc: Close window
             // I: Print total points
-            // P: Toggle add points
+            // P: Toggle play/pause adding points
+            // S: Toogle show/hide points
             ///
             else if (event.type == sf::Event::KeyReleased)
             {
@@ -54,12 +56,43 @@ int main()
                     break;
 
                 case sf::Keyboard::I:
-                    std::cout << "points count = " << Quad::count << std::endl;
+                    std::cout << "Total points: " << Quad::count << std::endl;
                     break;
 
                 case sf::Keyboard::P:
                     adding = !adding;
                     break;
+
+                case sf::Keyboard::S:
+                    Quad::showPoints = !Quad::showPoints;
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
+            // Modify boundary size
+            else if (event.type == sf::Event::KeyPressed)
+            {
+                switch (event.key.code)
+                {
+                case sf::Keyboard::Down:
+                    range.boundary.setHeight(range.boundary.getHeight() - dsize);
+                    break;
+
+                case sf::Keyboard::Up:
+                    range.boundary.setHeight(range.boundary.getHeight() + dsize);
+                    break;
+                
+                case sf::Keyboard::Left:
+                    range.boundary.setWidth(range.boundary.getWidth() - dsize);
+                    break;
+
+                case sf::Keyboard::Right:
+                    range.boundary.setWidth(range.boundary.getWidth() + dsize);
+                    break;
+
                 default:
                     break;
                 }
@@ -77,10 +110,7 @@ int main()
                         qtree->query(range);
                     }
 
-                    std::cout << "Repositioning the range..." << std::endl;
                     range.setPosition(sf::Vector2f(sf::Mouse::getPosition(window)));
-                    std::cout << range.boundary.x << "," << range.boundary.y << std::endl;
-                    std::cout << range.boundary.shape.getPosition().x << "," << range.boundary.shape.getPosition().y << std::endl;
                 }
             }
         }

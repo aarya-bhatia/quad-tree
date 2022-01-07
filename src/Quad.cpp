@@ -1,6 +1,7 @@
 #include "Quad.h"
 
 int Quad::count = 0;
+bool Quad::showPoints = true;
 
 bool Quad::insert(const sf::Vector2f &point)
 {
@@ -80,7 +81,10 @@ void Quad::render(sf::RenderWindow &window)
 {
     boundary.render(window);
 
-    node.render(window);
+    if (Quad::showPoints)
+    {
+        node.render(window);
+    }
 
     for (Quad *quad : children)
     {

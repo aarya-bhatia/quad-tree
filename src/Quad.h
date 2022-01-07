@@ -39,6 +39,7 @@ public:
     void render(sf::RenderWindow &window);
 
     static int count;
+    static bool showPoints;
 
     static Quad *createQtree(const sf::RenderWindow &window)
     {

@@ -1,5 +1,8 @@
 CXX=clang++
-CXXFLAGS=-Wall -g -std=c++14
+
+WARNINGS = -pedantic -Wall -Werror -Wfatal-errors -Wextra -Wno-unused-parameter -Wno-unused-variable
+
+CXXFLAGS=$(WARNINGS) -g -std=c++14 -O0
 INCLUDES=$(shell find src -type d)
 CPPFLAGS=$(addprefix -I, $(INCLUDES)) -MMD -MP
 SRC=$(shell find src -name *.cpp)
@@ -12,9 +15,11 @@ all: $(TARGET_EXE)
 $(TARGET_EXE): $(OBJ)
 	$(CXX) $(LDLIBS) $^ -o $@
 
-obj/%.o: src/%.cpp $(wildcard src/*.h)
-	mkdir -p $(dir $@);
+obj/%.o: src/%.cpp $(wildcard src/*.h) | obj
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+
+obj:
+	mkdir -p obj	
 
 clean:
 	rm -rf obj $(TARGET_EXE)

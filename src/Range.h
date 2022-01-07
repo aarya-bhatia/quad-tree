@@ -15,6 +15,16 @@ public:
     {
     }
 
+    void setWidth(float width)
+    {
+        boundary.setWidth(width);
+    }
+
+    void setHeight(float height)
+    {
+        boundary.setHeight(height);
+    }
+
     bool isMarked() const
     {
         return marked;

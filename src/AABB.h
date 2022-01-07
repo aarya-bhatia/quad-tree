@@ -23,6 +23,42 @@ struct AABB
 
     void init();
 
+    float getHeight() const 
+    {
+        return hh * 2;
+    }
+
+    float getWidth() const 
+    {
+        return hw * 2;
+    }
+
+    void setWidth(float nw)
+    {
+        if(nw <= 0) return;
+
+        hw = nw/2;
+
+        x = shape.getPosition().x + hw;
+        y = shape.getPosition().y + hh;
+
+        shape.setPosition(x - hw, y - hh);
+        shape.setSize(sf::Vector2f(hw * 2, hh * 2));
+    }
+
+    void setHeight(float nh)
+    {
+        if(nh <= 0) return;
+
+        hh = nh/2;
+
+        x = shape.getPosition().x + hw;
+        y = shape.getPosition().y + hh;
+
+        shape.setPosition(x - hw, y - hh);
+        shape.setSize(sf::Vector2f(hw * 2, hh * 2));
+    }
+
     void setPosition(const sf::Vector2f &position)
     {
         x = position.x + hw;
