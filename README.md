@@ -22,4 +22,7 @@ The quadtree accepts the points on the screen and subdivides the larger areas in
     * The points are added automatically at the position of the mouse cursor.
     * Exit the Insert Mode to stop adding new points.
 
-![](res/screenshot_01.png)
+![screenshot](res/screenshot_01.png)
+![screenshot](res/screenshot_02.png)
+![screenshot](res/screenshot_03.png)
+![screenshot](res/screenshot_04.png)
