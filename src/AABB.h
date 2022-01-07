@@ -16,8 +16,25 @@ struct AABB
     sf::RectangleShape shape;
     sf::Color color; //outline
 
-    explicit AABB(float x = 0, float y = 0, float width = 0, float height = 0, const sf::Color &color = sf::Color::White) : x(x), y(y), hw(width / 2), hh(height / 2), color(color)
+    explicit AABB(float x_ = 0, float y_ = 0, float width_ = 0, float height_ = 0, const sf::Color &color_ = sf::Color::White)
     {
+        x = x_;
+        y = y_;
+        hw = width_ / 2;
+        hh = height_ / 2;
+        color = color_;
+
+        init();
+    }
+
+    explicit AABB(const sf::Vector2f &center, const sf::Vector2f &size)
+    {
+        x = center.x;
+        y = center.y;
+        hw = size.x/2;
+        hh = size.y/2;
+        color = sf::Color::White;
+
         init();
     }
 
@@ -77,6 +94,11 @@ struct AABB
                point.y >= y - hh &&
                point.x <= x + hw &&
                point.y <= y + hh;
+    }
+
+    bool contains(float x, float y) const 
+    {
+        return contains(sf::Vector2f(x, y));
     }
 
     ///

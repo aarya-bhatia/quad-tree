@@ -4,9 +4,6 @@
 #include "QtNode.h"
 #include "Range.h"
 
-#include <iostream>
-#include <array>
-
 enum quadrants
 {
     northeast,
@@ -19,33 +16,20 @@ enum quadrants
 class Quad
 {
 public:
-    Quad(const AABB &boundary = AABB()) : boundary(boundary), node()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            children[i] = nullptr;
-        }
-    }
+    Quad(const AABB &boundary = AABB());
+    Quad(const sf::Vector2f &center, const sf::Vector2f &size);
+    ~Quad();
 
-    Quad(const sf::Vector2f &center, const sf::Vector2f &size) : Quad(AABB(center.x, center.y, size.x, size.y)) {}
-
-    ~Quad()
-    {
-        clear();
-    }
-
+    bool contains(const sf::Vector2f &point) const;
     bool insert(const sf::Vector2f &point);
     void query(const Range &range);
     void render(sf::RenderWindow &window);
 
     static int count;
     static bool showPoints;
+    static const int max_capacity = 10000;
 
-    static Quad *createQtree(const sf::RenderWindow &window)
-    {
-        sf::Vector2u size = window.getSize();
-        return new Quad(sf::Vector2f(size.x / 2, size.y / 2), sf::Vector2f(size));
-    }
+    static Quad *createQtree(const sf::RenderWindow &window);
 
 private:
     AABB boundary;

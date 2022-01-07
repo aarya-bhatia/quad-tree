@@ -18,7 +18,10 @@ public:
     ~QtNode();
 
     bool full() const;
+    bool empty() const;
+    bool contains(const sf::Vector2f &point) const;
     void insert(const sf::Vector2f &point);
+    void remove(const sf::Vector2f &point);
     void query(const AABB &range, bool mark);
     void render(sf::RenderWindow &window);
 };

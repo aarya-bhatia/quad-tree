@@ -3,9 +3,50 @@
 int Quad::count = 0;
 bool Quad::showPoints = true;
 
+Quad::Quad(const AABB &boundary) : boundary(boundary), node()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        children[i] = nullptr;
+    }
+}
+
+Quad::Quad(const sf::Vector2f &center, const sf::Vector2f &size)
+{
+    boundary = AABB(center.x, center.y, size.x, size.y);
+
+    for (int i = 0; i < 4; i++)
+    {
+        children[i] = nullptr;
+    }
+}
+
+Quad::~Quad()
+{
+    clear();
+}
+
+Quad *Quad::createQtree(const sf::RenderWindow &window)
+{
+    sf::Vector2u size = window.getSize();
+    return new Quad(sf::Vector2f(size.x / 2, size.y / 2), sf::Vector2f(size));
+}
+
 bool Quad::insert(const sf::Vector2f &point)
 {
+    if(Quad::count >= Quad::max_capacity)
+    {
+        return false;
+    }
+
     if (!boundary.contains(point))
+    {
+        return false;
+    }
+
+    // Point already exists
+
+    if(node.contains(point))
     {
         return false;
     }
@@ -97,12 +138,34 @@ void Quad::render(sf::RenderWindow &window)
 
 void Quad::clear()
 {
-    for (Quad *child : children)
+    for(int i = 0; i < 4; i++)
     {
-        if (child != nullptr)
+        if (children[i])
         {
-            child->clear();
-            delete child;
+            children[i]->clear();
+            delete children[i];
+            children[i] = nullptr;
         }
     }
+}
+
+bool Quad::contains(const sf::Vector2f &point) const
+{
+    if(node.contains(point))
+    {
+        return true;
+    }
+
+    for(int i = 0; i < 4; i++)
+    {
+        if(children[i])
+        {
+            if(children[i]->contains(point))
+            {
+                return true;
+            } 
+        }
+    }
+
+    return false;
 }
