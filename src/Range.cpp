@@ -2,7 +2,6 @@
 
 Range::Range(float x, float y, float w, float h) : boundary_(x, y, w, h, sf::Color::Green)
 {
-    num_points_ = 0;
 }
 
 float Range::getWidth() const
@@ -32,7 +31,6 @@ bool Range::isMarked() const
 
 void Range::setMarked(bool b)
 {
-    num_points_ = 0;
     marked_ = b;
 }
 

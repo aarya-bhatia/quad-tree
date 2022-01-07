@@ -16,10 +16,9 @@ public:
     bool contains(const sf::Vector2f &point) const;
     bool insert(const sf::Vector2f &point);
     void query(const Range &range);
-    void render(sf::RenderWindow &window);
+    void render(sf::RenderWindow &window, bool showPoints = true);
 
     int count;
-    bool showPoints;
     static const int max_capacity = 10000;
 
     static Quad *createQtree(const sf::RenderWindow &window);

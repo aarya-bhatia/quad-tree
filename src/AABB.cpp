@@ -15,7 +15,7 @@ AABB::AABB(float x, float y, float w, float h, const sf::Color &color)
     radius_ = sf::Vector2f(w/2, h/2);
     color_ = color;
     shape_.setFillColor(sf::Color::Transparent);
-    shape_.setOutlineThickness(2.5f);
+    shape_.setOutlineThickness(2);
     shape_.setOutlineColor(color);
     shape_.setSize(sf::Vector2f(w, h));
     shape_.setPosition(x, y);

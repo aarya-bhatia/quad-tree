@@ -13,7 +13,7 @@ public:
     void unmark();
     void render(sf::RenderWindow &window);
 
-    static const int radius;
+    static const float radius;
     static const sf::Color marked;
     static const sf::Color normal;
 

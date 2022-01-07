@@ -68,7 +68,7 @@ void QtNode::query(const AABB &range, bool mark)
 {
     for (int i = 0; i < size_; i++)
     {
-        if (range.contains(points_[i]->position()))
+        if (points_[i] && range.contains(points_[i]->position()))
         {
             if (mark)
             {
@@ -86,7 +86,10 @@ void QtNode::render(sf::RenderWindow &window)
 {
     for (int i = 0; i < size_; i++)
     {
-        points_[i]->render(window);
+        if(points_[i])
+        {
+            points_[i]->render(window);
+        }
     }
 }
 
@@ -94,7 +97,7 @@ bool QtNode::contains(const sf::Vector2f &point) const
 {
     for(int i = 0; i < size_; i++)
     {
-        if(points_[i]->position() == point)
+        if(points_[i] && points_[i]->position() == point)
         {
             return true;
         }

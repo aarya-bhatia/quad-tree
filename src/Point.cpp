@@ -1,6 +1,6 @@
 #include "Point.h"
 
-const int Point::radius = 4;
+const float Point::radius = 4;
 const sf::Color Point::marked = sf::Color::Red;
 const sf::Color Point::normal = sf::Color::White;
 

@@ -15,9 +15,10 @@ int main()
 
     srand(time(0));
 
-    int t = 2;
+    int t = 0;
     bool adding = true;
-    int dsize = 2;
+    bool showPoints = true;
+    int dsize = 5;
 
     Range range(0, 0, 400, 400);
 
@@ -64,7 +65,7 @@ int main()
                     break;
 
                 case sf::Keyboard::S:
-                    qtree->showPoints = !qtree->showPoints;
+                    showPoints = !showPoints;
                     break;
 
                 default:
@@ -75,6 +76,9 @@ int main()
             // Modify boundary size
             else if (event.type == sf::Event::KeyPressed)
             {
+                range.setMarked(false);
+                qtree->query(range);
+
                 switch (event.key.code)
                 {
                 case sf::Keyboard::Down:
@@ -104,12 +108,8 @@ int main()
                 // Reposition range to mouse position and unmark currently marked points
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                 {
-                    if (range.isMarked())
-                    {
-                        range.setMarked(false);
-                        qtree->query(range);
-                    }
-
+                    range.setMarked(false);
+                    qtree->query(range);
                     range.setPosition(sf::Vector2f(sf::Mouse::getPosition(window)));
                 }
             }
@@ -118,7 +118,9 @@ int main()
         window.clear(sf::Color::Black);
 
         if (qtree == nullptr)
+        {
             continue;
+        }
 
         t = (t + 1) % INT16_MAX;
 
@@ -139,7 +141,7 @@ int main()
         qtree->query(range);
 
         // Render
-        qtree->render(window);
+        qtree->render(window, showPoints);
         range.render(window);
 
         // Buffer swap

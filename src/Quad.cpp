@@ -8,7 +8,6 @@ Quad::Quad(const AABB &boundary) : boundary_(boundary)
     }
 
     count = 0;
-    showPoints = true;
 }
 
 Quad::~Quad()
@@ -18,7 +17,7 @@ Quad::~Quad()
 
 Quad *Quad::createQtree(const sf::RenderWindow &window)
 {
-    return new Quad(AABB(window.getPosition().x, window.getPosition().y, window.getSize().x, window.getSize().y));
+    return new Quad(AABB(0, 0, window.getSize().x, window.getSize().y));
 }
 
 bool Quad::insert(const sf::Vector2f &point)
@@ -33,13 +32,6 @@ bool Quad::insert(const sf::Vector2f &point)
     {
         return false;
     }
-
-    // Point already exists
-    // if(node_.contains(point))
-    // {
-    //     std::cout << "Point already exists: " << point << std::endl;
-    //     return false;
-    // }
 
     if (!node_.full())
     {
@@ -106,7 +98,7 @@ void Quad::query(const Range &range)
     }
 }
 
-void Quad::render(sf::RenderWindow &window)
+void Quad::render(sf::RenderWindow &window, bool showPoints)
 {
     boundary_.render(window);
 
@@ -119,7 +111,7 @@ void Quad::render(sf::RenderWindow &window)
     {
         if(children_[i])
         {
-            children_[i]->render(window);
+            children_[i]->render(window, showPoints);
         }
     }
 }

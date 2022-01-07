@@ -19,6 +19,5 @@ public:
 
 private:
     AABB boundary_;
-    int num_points_;
     bool marked_ = false;
 };
