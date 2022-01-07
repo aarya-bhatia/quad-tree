@@ -7,14 +7,14 @@ INCLUDES=$(shell find src -type d)
 CPPFLAGS=$(addprefix -I, $(INCLUDES)) -MMD -MP
 SRC=$(shell find src -name *.cpp)
 OBJ=$(SRC:src/%.cpp=.obj/%.o)
-LDLIBS=-lsfml-graphics -lsfml-window -lsfml-system
+LDLIBS=-lsfml-graphics -lsfml-window -lsfml-system -Llib/ -lcs225
 
 all: main test
 
-main: .obj/main.o .obj/AABB.o .obj/QtNode.o .obj/Quad.o
+main: .obj/main.o .obj/AABB.o .obj/QtNode.o .obj/Quad.o .obj/Range.o .obj/Point.o 
 	$(CXX) $(LDLIBS) $^ -o $@
 
-test: .obj/test.o .obj/AABB.o .obj/QtNode.o .obj/Quad.o
+test: .obj/test.o .obj/AABB.o .obj/QtNode.o .obj/Quad.o .obj/Range.o .obj/Point.o
 	$(CXX) $(LDLIBS) $^ -o $@
 
 .obj/%.o: src/%.cpp $(wildcard src/*.h) | .obj

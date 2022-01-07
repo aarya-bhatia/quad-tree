@@ -1,24 +1,14 @@
 #include "Quad.h"
 
-int Quad::count = 0;
-bool Quad::showPoints = true;
-
-Quad::Quad(const AABB &boundary) : boundary(boundary), node()
+Quad::Quad(const AABB &boundary) : boundary_(boundary)
 {
     for (int i = 0; i < 4; i++)
     {
-        children[i] = nullptr;
+        children_[i] = nullptr;
     }
-}
 
-Quad::Quad(const sf::Vector2f &center, const sf::Vector2f &size)
-{
-    boundary = AABB(center.x, center.y, size.x, size.y);
-
-    for (int i = 0; i < 4; i++)
-    {
-        children[i] = nullptr;
-    }
+    count = 0;
+    showPoints = true;
 }
 
 Quad::~Quad()
@@ -28,73 +18,71 @@ Quad::~Quad()
 
 Quad *Quad::createQtree(const sf::RenderWindow &window)
 {
-    sf::Vector2u size = window.getSize();
-    return new Quad(sf::Vector2f(size.x / 2, size.y / 2), sf::Vector2f(size));
+    return new Quad(AABB(window.getPosition().x, window.getPosition().y, window.getSize().x, window.getSize().y));
 }
 
 bool Quad::insert(const sf::Vector2f &point)
 {
-    if(Quad::count >= Quad::max_capacity)
+    if(count >= Quad::max_capacity)
     {
         return false;
     }
 
-    if (!boundary.contains(point))
+    // Point does not belong in this region
+    if (!boundary_.contains(point))
     {
         return false;
     }
 
     // Point already exists
+    // if(node_.contains(point))
+    // {
+    //     std::cout << "Point already exists: " << point << std::endl;
+    //     return false;
+    // }
 
-    if(node.contains(point))
+    if (!node_.full())
     {
-        return false;
-    }
-
-    if (!node.full())
-    {
-        node.insert(point);
-
-        Quad::count++;
-
+        node_.insert(point);
+        count++;
         return true;
     }
 
-    if (boundary.isNW(point))
+    if (boundary_.isNorthwest(point))
     {
-        if (children[northwest] == nullptr)
+        if (children_[northwest] == nullptr)
         {
-            children[northwest] = new Quad(boundary.northwest());
+            children_[northwest] = new Quad(boundary_.northwest());
         }
 
-        return children[northwest]->insert(point);
+        return children_[northwest]->insert(point);
     }
-    else if (boundary.isNE(point))
+    else if (boundary_.isNortheast(point))
     {
-        if (children[northeast] == nullptr)
+        if (children_[northeast] == nullptr)
         {
-            children[northeast] = new Quad(boundary.northeast());
+            children_[northeast] = new Quad(boundary_.northeast());
         }
 
-        return children[northeast]->insert(point);
+        return children_[northeast]->insert(point);
     }
-    else if (boundary.isSW(point))
+    else if (boundary_.isSouthwest(point))
     {
-        if (children[southwest] == nullptr)
+        if (children_[southwest] == nullptr)
         {
-            children[southwest] = new Quad(boundary.southwest());
+            children_[southwest] = new Quad(boundary_.southwest());
         }
 
-        return children[southwest]->insert(point);
+        return children_[southwest]->insert(point);
     }
-    else if (boundary.isSE(point))
+    else if (boundary_.isSoutheast(point))
     {
-        if (children[southeast] == nullptr)
+        if (children_[southeast] == nullptr)
         {
-            children[southeast] = new Quad(boundary.southeast());
+            children_[southeast] = new Quad(boundary_.southeast());
         }
 
-        return children[southeast]->insert(point);
+        return children_[southeast]->insert(point);
     }
 
     return false;
@@ -102,36 +90,36 @@ bool Quad::insert(const sf::Vector2f &point)
 
 void Quad::query(const Range &range)
 {
-    if (!boundary.intersects(range.boundary))
+    if (!boundary_.intersects(range.getBoundary()))
     {
         return;
     }
 
-    node.query(range.boundary, range.isMarked());
+    node_.query(range.getBoundary(), range.isMarked());
 
-    for (Quad *child : children)
+    for(int i = 0; i < 4; i++)
     {
-        if (child != nullptr)
+        if(children_[i])
         {
-            child->query(range);
+            children_[i]->query(range);
         }
     }
 }
 
 void Quad::render(sf::RenderWindow &window)
 {
-    boundary.render(window);
+    boundary_.render(window);
 
-    if (Quad::showPoints)
+    if (showPoints)
     {
-        node.render(window);
+        node_.render(window);
     }
 
-    for (Quad *quad : children)
+    for(int i = 0; i < 4; i++)
     {
-        if (quad != nullptr)
+        if(children_[i])
         {
-            quad->render(window);
+            children_[i]->render(window);
         }
     }
 }
@@ -140,27 +128,27 @@ void Quad::clear()
 {
     for(int i = 0; i < 4; i++)
     {
-        if (children[i])
+        if (children_[i])
         {
-            children[i]->clear();
-            delete children[i];
-            children[i] = nullptr;
+            children_[i]->clear();
+            delete children_[i];
+            children_[i] = nullptr;
         }
     }
 }
 
 bool Quad::contains(const sf::Vector2f &point) const
 {
-    if(node.contains(point))
+    if(node_.contains(point))
     {
         return true;
     }
 
     for(int i = 0; i < 4; i++)
     {
-        if(children[i])
+        if(children_[i])
         {
-            if(children[i]->contains(point))
+            if(children_[i]->contains(point))
             {
                 return true;
             } 

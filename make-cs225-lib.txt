@@ -1,0 +1,4 @@
+g++ -std=c++14 -Wall -I lodepng/lodepng.h -c lodepng/lodepng.cpp -o .obj/lodepng.o
+g++ -std=c++14 -Wall -c HSLAPixel.cpp -o .obj/HSLAPixel.o
+g++ -std=c++14 -Wall -c PNG.cpp -o .obj/PNG.o
+ar rcs libcs225.a .obj/*

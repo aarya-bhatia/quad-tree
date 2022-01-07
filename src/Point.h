@@ -1,41 +1,25 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-
-static const int radius = 4;
-static const sf::Color marked = sf::Color::Red;
-static const sf::Color normal = sf::Color::White;
+#include <iostream>
 
 class Point
 {
 public:
-    explicit Point(const sf::Vector2f &point = sf::Vector2f())
-    {
-        shape = sf::CircleShape(radius);
-        shape.setFillColor(normal);
-        shape.setPosition(point);
-    }
+    explicit Point(const sf::Vector2f &position = sf::Vector2f());
 
-    const sf::Vector2f &position() const
-    {
-        return shape.getPosition();
-    }
+    const sf::Vector2f &position() const;
+    void mark();
+    void unmark();
+    void render(sf::RenderWindow &window);
 
-    void mark()
-    {
-        shape.setFillColor(marked);
-    }
-
-    void unmark()
-    {
-        shape.setFillColor(normal);
-    }
-
-    void render(sf::RenderWindow &window)
-    {
-        window.draw(shape);
-    }
+    static const int radius;
+    static const sf::Color marked;
+    static const sf::Color normal;
 
 private:
-    sf::CircleShape shape;
+    sf::CircleShape shape_;
 };
+
+std::ostream &operator<<(std::ostream &out, const sf::Vector2f &point);
+std::ostream &operator<<(std::ostream &out, const Point &point);

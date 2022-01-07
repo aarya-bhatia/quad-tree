@@ -11,7 +11,7 @@ static const char *title = "QuadTree";
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(width, height), title);
-    Quad *qtree = Quad::createQtree(window);
+    Quad *qtree = new Quad(AABB(sf::Vector2f(), sf::Vector2f(window.getSize()), sf::Color::Yellow));
 
     srand(time(0));
 
@@ -19,7 +19,7 @@ int main()
     bool adding = true;
     int dsize = 2;
 
-    Range range(200, 300, 400, 400);
+    Range range(0, 0, 400, 400);
 
     while (window.isOpen())
     {
@@ -56,7 +56,7 @@ int main()
                     break;
 
                 case sf::Keyboard::I:
-                    std::cout << "Total points: " << Quad::count << std::endl;
+                    std::cout << "Total points: " << qtree->count << std::endl;
                     break;
 
                 case sf::Keyboard::P:
@@ -64,7 +64,7 @@ int main()
                     break;
 
                 case sf::Keyboard::S:
-                    Quad::showPoints = !Quad::showPoints;
+                    qtree->showPoints = !qtree->showPoints;
                     break;
 
                 default:
@@ -78,19 +78,19 @@ int main()
                 switch (event.key.code)
                 {
                 case sf::Keyboard::Down:
-                    range.boundary.setHeight(range.boundary.getHeight() - dsize);
+                    range.setHeight(range.getHeight() - dsize);
                     break;
 
                 case sf::Keyboard::Up:
-                    range.boundary.setHeight(range.boundary.getHeight() + dsize);
+                    range.setHeight(range.getHeight() + dsize);
                     break;
                 
                 case sf::Keyboard::Left:
-                    range.boundary.setWidth(range.boundary.getWidth() - dsize);
+                    range.setWidth(range.getWidth() - dsize);
                     break;
 
                 case sf::Keyboard::Right:
-                    range.boundary.setWidth(range.boundary.getWidth() + dsize);
+                    range.setWidth(range.getWidth() + dsize);
                     break;
 
                 default:
@@ -134,10 +134,11 @@ int main()
         {
             range.setMarked(true);
         }
+
+        // Query new points
         qtree->query(range);
 
-        // Render everything
-
+        // Render
         qtree->render(window);
         range.render(window);
 

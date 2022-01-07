@@ -5,14 +5,8 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
-static const int qt_node_capacity = 2;
-
 class QtNode
 {
-private:
-    int size;
-    Point *points[qt_node_capacity];
-
 public:
     QtNode();
     ~QtNode();
@@ -24,4 +18,10 @@ public:
     void remove(const sf::Vector2f &point);
     void query(const AABB &range, bool mark);
     void render(sf::RenderWindow &window);
+
+    static const int qt_node_capacity = 4;
+
+private:
+    int size_;
+    Point *points_[qt_node_capacity];
 };
