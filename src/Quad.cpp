@@ -1,13 +1,14 @@
 #include "Quad.h"
 
-Quad::Quad(const AABB &boundary) : boundary_(boundary)
+bool Quad::showPoints = true;
+bool Quad::showGrid = true;
+
+Quad::Quad(const AABB &boundary, int depth) : boundary_(boundary), depth_(depth)
 {
     for (int i = 0; i < 4; i++)
     {
         children_[i] = nullptr;
     }
-
-    count = 0;
 }
 
 Quad::~Quad()
@@ -22,7 +23,8 @@ Quad *Quad::createQtree(const sf::RenderWindow &window)
 
 bool Quad::insert(const sf::Vector2f &point)
 {
-    if(count >= Quad::max_capacity)
+    // At max capacity
+    if(boundary_.getWidth() <= 1 || boundary_.getHeight() <= 1)
     {
         return false;
     }
@@ -36,7 +38,6 @@ bool Quad::insert(const sf::Vector2f &point)
     if (!node_.full())
     {
         node_.insert(point);
-        count++;
         return true;
     }
 
@@ -44,7 +45,7 @@ bool Quad::insert(const sf::Vector2f &point)
     {
         if (children_[northwest] == nullptr)
         {
-            children_[northwest] = new Quad(boundary_.northwest());
+            children_[northwest] = new Quad(boundary_.northwest(), depth_ + 1);
         }
 
         return children_[northwest]->insert(point);
@@ -53,7 +54,7 @@ bool Quad::insert(const sf::Vector2f &point)
     {
         if (children_[northeast] == nullptr)
         {
-            children_[northeast] = new Quad(boundary_.northeast());
+            children_[northeast] = new Quad(boundary_.northeast(), depth_ + 1);
         }
 
         return children_[northeast]->insert(point);
@@ -62,7 +63,7 @@ bool Quad::insert(const sf::Vector2f &point)
     {
         if (children_[southwest] == nullptr)
         {
-            children_[southwest] = new Quad(boundary_.southwest());
+            children_[southwest] = new Quad(boundary_.southwest(), depth_ + 1);
         }
 
         return children_[southwest]->insert(point);
@@ -71,7 +72,7 @@ bool Quad::insert(const sf::Vector2f &point)
     {
         if (children_[southeast] == nullptr)
         {
-            children_[southeast] = new Quad(boundary_.southeast());
+            children_[southeast] = new Quad(boundary_.southeast(), depth_ + 1);
         }
 
         return children_[southeast]->insert(point);
@@ -98,11 +99,14 @@ void Quad::query(const Range &range)
     }
 }
 
-void Quad::render(sf::RenderWindow &window, bool showPoints)
+void Quad::render(sf::RenderWindow &window)
 {
-    boundary_.render(window);
+    if(Quad::showGrid)
+    {
+        boundary_.render(window);
+    }
 
-    if (showPoints)
+    if (Quad::showPoints)
     {
         node_.render(window);
     }
@@ -111,7 +115,7 @@ void Quad::render(sf::RenderWindow &window, bool showPoints)
     {
         if(children_[i])
         {
-            children_[i]->render(window, showPoints);
+            children_[i]->render(window);
         }
     }
 }

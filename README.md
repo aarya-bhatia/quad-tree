@@ -19,8 +19,10 @@ The white rectangles represent the structure of the quad tree. The green rectang
 ### Key Controls
 
 * Esc: Close window
+* C: Clear all points
 * P: Toggle enter/exit Insert Mode
 * S: Toogle show/hide points
+* G: Toggle show/hide grid lines
 * I: Print total points to Console
 * Left/Right Arrow Keys: Increase/Decrease width of query region
 * Up/Down Arrow Keys: Increase/Decrease height of query region

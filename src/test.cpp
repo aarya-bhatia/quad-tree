@@ -58,7 +58,6 @@ void testQuad()
     Quad *qtree = new Quad(AABB(0, 0, 100, 100));
     sf::Vector2f p(20, 20);
     TEST_CHECK(qtree->insert(p));
-    TEST_CHECK(qtree->count == 1);
     TEST_CHECK(qtree->contains(p));
     delete qtree;
 }
